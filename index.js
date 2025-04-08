@@ -1,27 +1,29 @@
 // Import required modules
-require("dotenv").config();   //environment variables from .env file
-const express = require("express"); 
-const mongoose = require("mongoose"); 
+require("dotenv").config();   // Load environment variables
+const express = require("express");
+const connectDB = require("./database"); // Import database connection
+const userRoutes = require("./routes/userRoutes");
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 
 // Middleware to parse incoming JSON data
 app.use(express.json());
 
-// Connect to MongoDB Atlas using Mongoose
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("✅ MongoDB Atlas connected successfully"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+// Connect to MongoDB Atlas
+connectDB();
 
-//basic route to check if the API is running
+// Basic route to check if the API is running
 app.get("/", (req, res) => {
   res.send("📚 Welcome to the BookVerse API!");
 });
+
+// Use routes
+app.use("/api/users", userRoutes);
 
 // Start the Express server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
