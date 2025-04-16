@@ -3,6 +3,7 @@ require("dotenv").config();   // Load environment variables
 const express = require("express");
 const connectDB = require("./database"); // Import database connection
 const userRoutes = require("./routes/userRoutes");
+const booksRoutes = require("./routes/booksRoutes");
 
 // Initialize Express app
 const app = express();
@@ -21,6 +22,8 @@ app.get("/", (req, res) => {
 
 // Use routes
 app.use("/api/users", userRoutes);
+
+app.use("/api/books", booksRoutes);
 
 // Start the Express server
 app.listen(PORT, () => {
