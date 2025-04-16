@@ -1,32 +1,37 @@
 // Import required modules
-require("dotenv").config();   // Load environment variables
+require("dotenv").config();              
 const express = require("express");
-const connectDB = require("./database"); // Import database connection
+const connectDB = require("./database"); // MongoDB connection
 const userRoutes = require("./routes/userRoutes");
 const booksRoutes = require("./routes/booksRoutes");
+const { notFound, errorHandler } = require("./middleware/errorHandler"); 
 
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware to parse incoming JSON data
+// Middleware to parse incoming JSON
 app.use(express.json());
 
 // Connect to MongoDB Atlas
 connectDB();
 
-// Basic route to check if the API is running
+// Test route
 app.get("/", (req, res) => {
   res.send("📚 Welcome to the BookVerse API!");
 });
 
-// Use routes
+// Register routes
 app.use("/api/users", userRoutes);
-
 app.use("/api/books", booksRoutes);
 
-// Start the Express server
+// Handle unknown routes
+app.use(notFound); 
+
+// Global error handler
+app.use(errorHandler); 
+
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
