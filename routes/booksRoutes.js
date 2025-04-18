@@ -9,9 +9,9 @@ const asyncHandler = require('express-async-handler');
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    const { title, author, ISBN, genre, price, stockQuantity } = req.body;
+    const { title, author, EAN, genre, price, stock } = req.body;
 
-    if (!title || !author || !ISBN || !genre || !price || !stockQuantity) {
+    if (!title || !author || !EAN || !genre || !price || !stock) {
       res.status(400);
       throw new Error('Please provide all required fields');
     }
@@ -19,10 +19,10 @@ router.post(
     const book = new Book({
       title,
       author,
-      ISBN,
+      EAN,
       genre,
       price,
-      stockQuantity,
+      stock,
     });
 
     const createdBook = await book.save();
@@ -55,5 +55,13 @@ router.get(
   '/:id',
   asyncHandler(async (req, res) => {
     const book = await Book.findById(req.params.id);
-    if (!book)
+    if (!book) {
+      res.status(404);
+      throw new Error('Book not found');
+    }
+    res.json(book);
+  })
+);
+
+module.exports = router;
 
