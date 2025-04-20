@@ -6,9 +6,11 @@ const userRoutes = require("./routes/userRoutes");
 const booksRoutes = require("./routes/booksRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes")
 const { notFound, errorHandler } = require("./middleware/errorHandler"); 
+const cors = require("cors");
 
 // Initialize Express app
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 // Middleware to parse incoming JSON

@@ -11,14 +11,14 @@ const asyncHandler = require('express-async-handler');
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    const { title, author, EAN, genre, price, stock } = req.body;
+    const { title, author, ean, genre, price, stock } = req.body;
 
-    if (!title || !author || !EAN || !genre || !price || !stock) {
+    if (!title || !author || !ean || !genre || !price || !stock) {
       res.status(400);
       throw new Error('Please provide all required fields');
     }
 
-    const book = new Book({ title, author, EAN, genre, price, stock });
+    const book = new Book({ title, author, ean, genre, price, stock });
     const createdBook = await book.save();
     res.status(201).json(createdBook);
   })
@@ -75,10 +75,10 @@ router.put(
     }
 
     // Update only the fields provided in req.body
-    const { title, author, EAN, genre, price, stock } = req.body;
+    const { title, author, ean, genre, price, stock } = req.body;
     if (title !== undefined)  book.title  = title;
     if (author !== undefined) book.author = author;
-    if (EAN !== undefined)    book.EAN    = EAN;
+    if (ean !== undefined)    book.ean   = ean;
     if (genre !== undefined)  book.genre  = genre;
     if (price !== undefined)  book.price  = price;
     if (stock !== undefined)  book.stock  = stock;
@@ -101,7 +101,8 @@ router.delete(
       res.status(404);
       throw new Error('Book not found');
     }
-    await book.remove();
+    
+    await book.deleteOne();
     res.json({ message: 'Book deleted' });
   })
 );

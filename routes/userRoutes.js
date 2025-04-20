@@ -1,5 +1,6 @@
+const { protect } = require("../middleware/authMiddleware");
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const generateToken = require("../jwt/generateToken");
@@ -27,8 +28,8 @@ router.post(
       throw new Error("User already exists");
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
 
     const newUser = new User({
       username,
@@ -63,7 +64,7 @@ router.post(
 
     const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcryptjs.compare(password, user.password))) {
       res.status(200).json({
         message: "Login successful",
         user: {
@@ -80,7 +81,72 @@ router.post(
   })
 );
 
+/*
+ * @route   PUT /api/users/:id
+ * @desc    Update user info
+ * @access  Private (auth middleware needed)
+ */
+router.put(
+  "/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    if (req.user._id.toString() !== req.params.id) {
+      res.status(403);
+      throw new Error("You can only update your own profile");
+    }
+
+    const updates = {
+      username: req.body.username,
+      email: req.body.email,
+    };
+
+    // Optional: Update password if provided
+    if (req.body.password) {
+      const salt = await bcryptjs.genSalt(10);
+      updates.password = await bcryptjs.hash(req.body.password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.json({
+      message: "Profile updated successfully",
+      user: {
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+      },
+    });
+  })
+);
+
+
+router.delete(
+  "/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    if (req.user._id.toString() !== req.params.id) {
+      res.status(403);
+      throw new Error("You can only delete your own profile");
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    await user.deleteOne();
+
+    res.json({ message: "User deleted successfully" });
+  })
+);
+
+
 module.exports = router;
+
 
 
 
