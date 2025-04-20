@@ -1,0 +1,763 @@
+{
+	"info": {
+		"_postman_id": "a49fda80-3448-4d88-8b21-004370a1d248",
+		"name": "First Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43499224"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Login successful and token returned\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.message).to.eql(\"Login successful\");\r",
+									"  pm.expect(jsonData).to.have.property(\"token\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"nompumelelo\",\r\n  \"email\": \"akilaprofvictoria@gmail.com\",\r\n  \"password\": \"mthomb3ni\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						},
+						"description": "allows registered users to login, using email and password"
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"nompumelelo\",\r\n  \"email\": \"akilaprofvictoria@gmail.com\",\r\n  \"password\": \"mthomb3ni\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "317"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"13d-xNOMW7kM/dIPhmUN/6Xl2Z+5Ne4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 06:52:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\",\n    \"user\": {\n        \"_id\": \"680259832898d99327452101\",\n        \"username\": \"nompumelelo\",\n        \"email\": \"akilaprofvictoria@gmail.com\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDI1OTgzMjg5OGQ5OTMyNzQ1MjEwMSIsImlhdCI6MTc0NTEzMTkzOCwiZXhwIjoxNzQ2MzQxNTM4fQ.kE0wm__54f-apD-Bej86o6R6Kgk3aps_hpFckshCOmI\"\n}"
+						}
+					]
+				},
+				{
+					"name": "New user 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User registered with token\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"token\");\r",
+									"  pm.expect(jsonData.message).to.eql(\"User registered successfully!\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n  \"username\": \"Pal\",\r\n  \"email\": \"palesamonama28@gmail.com\",\r\n  \"password\": \"monama28\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						},
+						"description": "retrieve the users information, using the userId"
+					},
+					"response": []
+				},
+				{
+					"name": "User 2 login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Login successful and token returned\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.message).to.eql(\"Login successful\");\r",
+									"  pm.expect(jsonData).to.have.property(\"token\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"thabangjob97@gmail.com\",\r\n    \"password\": \"job97\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User info updated\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"username\");\r",
+									"  pm.expect(jsonData).to.have.property(\"email\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDRkMzlhMmYwMmM3YmRmNzUwZGRmZiIsImlhdCI6MTc0NTE0Njk0NSwiZXhwIjoxNzQ2MzU2NTQ1fQ.U8ccDaKq6T9OC2rV3l0KQ1X1Sa1JX2rRXlI7Dyc1z7s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Thabang\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/6804d39a2f02c7bdf750ddff",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"6804d39a2f02c7bdf750ddff"
+							]
+						},
+						"description": "update a specific part of a user's information, using their user Id\n\nthe username was updated here"
+					},
+					"response": []
+				},
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Users list returned\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.be.an(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Single book returned\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"title\");\r",
+									"  pm.expect(jsonData).to.have.property(\"author\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/67ea739b6a2c5e6443c34fa0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"67ea739b6a2c5e6443c34fa0"
+							]
+						},
+						"description": "get a book's information by Id"
+					},
+					"response": []
+				},
+				{
+					"name": "Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Books list returned\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.be.an(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						},
+						"description": "fetch a list of all the books in the API"
+					},
+					"response": []
+				},
+				{
+					"name": "Create book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Book added successfully\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"title\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"title\": \"Womb Cety\",\r\n    \"author\": \"Tlotlo Tsamaase\",\r\n    \"genre\": \"Fiction/Sci-Fi\",\r\n    \"ean\": \"9781776413513\",\r\n    \"price\": 330,\r\n    \"stock\": 5\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						},
+						"description": "Create a new book, to add to the list of books"
+					},
+					"response": []
+				},
+				{
+					"name": "Update stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Book updated successfully\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property(\"title\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stock\" : 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/books/67ec157ef3e00c79aa6571f8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"67ec157ef3e00c79aa6571f8"
+							]
+						},
+						"description": "update a book's information, using Id\n\nthe number of books available in stock was updated"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Book deleted message\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.message).to.eql(\"Book deleted\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/6805255fa0b6719ce49c8298",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"6805255fa0b6719ce49c8298"
+							]
+						},
+						"description": "delete a book from the database"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wishlist",
+			"item": [
+				{
+					"name": "Wishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "21916680",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/680259832898d99327452101/wishlist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"680259832898d99327452101",
+								"wishlist"
+							]
+						},
+						"description": "fetch an array of a user's wishlist by user Id"
+					},
+					"response": []
+				},
+				{
+					"name": "Add book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Book added to wishlist\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.message).to.include(\"added\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"_id\": \"67ec4233f30b16cec063490e\",\r\n    \"title\": \"Strange Death of Europe\",\r\n    \"author\": \"Douglas Murray\",\r\n    \"genre\": \"Non-fiction/Political studies\",\r\n    \"ean\": \"9781472958006\",\r\n    \"price\": 540,\r\n    \"stock\": 3\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/680259832898d99327452101/wishlist/67ec4233f30b16cec063490e",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"680259832898d99327452101",
+								"wishlist",
+								"67ec4233f30b16cec063490e"
+							]
+						},
+						"description": "Add a book to a user's wishlist"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove from list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Book removed from wishlist\", function () {\r",
+									"  const jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData.message).to.include(\"removed\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/680259832898d99327452101/wishlist/67eafb706a2c5e6443c34faa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"680259832898d99327452101",
+								"wishlist",
+								"67eafb706a2c5e6443c34faa"
+							]
+						},
+						"description": "delete a book from a user's wishlist"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "21916680",
+			"type": "string"
+		}
+	]
+}
