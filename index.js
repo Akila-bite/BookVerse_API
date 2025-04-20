@@ -4,6 +4,7 @@ const express = require("express");
 const connectDB = require("./database"); // MongoDB connection
 const userRoutes = require("./routes/userRoutes");
 const booksRoutes = require("./routes/booksRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes")
 const { notFound, errorHandler } = require("./middleware/errorHandler"); 
 
 // Initialize Express app
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 // Register routes
 app.use("/api/users", userRoutes);
 app.use("/api/books", booksRoutes);
+app.use("/api/users", wishlistRoutes);
 
 // Handle unknown routes
 app.use(notFound); 

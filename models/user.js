@@ -22,7 +22,7 @@ password: {
 wishlist: [
     
     {  type: mongoose.Schema.Types.ObjectId,
-       ref: "books",
+       ref: "Book",
 
     },
 ],
