@@ -21,10 +21,10 @@ const bookSchema = new mongoose.Schema(
     ean: {
       type: String,
       required: true,
-      unique: true, // EANs are typically unique identifiers
+      unique: true, // EANs are unique identifiers
     },
     price: {
-      type: Number,
+      type: String,
       required: true,
       min: 0,
     },
